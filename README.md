@@ -9,6 +9,16 @@
 ```
 RewriteEngine On
 RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
 ```
 この.htaccessを使えば、例えば　あなたのサイトのアドレスがhttp://example.com だった場合、このアドレスへアクセスすると自動的に http://www.example.com へリダイレクトされます。やったぜ！
+
+## 解説
+### RewriteEngine On
+Rewrite機能を有効にします。Rewrite機能とは、アクセスのあったURLを、正規表現で書き換えてから処理する機能です。
+
+### RewriteCond
+RewriteCondはRewriteRuleを実行するための条件を定義するための記述です。「RewriteCond条件」に合致した場合に、3行目の「RewriteRule」を実行します。というわけで、具体的な「RewriteCond条件」は %{HTTP_HOST} !^www\. の部分という事になります。
+
+### %{HTTP_HOST} !^www\.
+%{HTTP_HOST} ではホスト名を取得しています。次の !^www\. では正規表現を使用しています。!は「否定」、^は「行頭」、\は「正規表現の特殊文字をエスケープ」、.は「任意の一文字（ですが、今回は\でエスケープされているので、「任意の一文字」という意味ではなく、「ドット」を意味します）」。つまり「^www\.」で、「その文章はwww.で始まっている」の意味。しかし、最初に否定を意味する!があるので「その文章はwww.で始まっていない」。つまり「ホスト名がwww.で始まっていない場合」という意味になります。
