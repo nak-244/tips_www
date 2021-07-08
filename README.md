@@ -11,7 +11,7 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} !^www\.
 RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
 ```
-この.htaccessを使えば、例えば　あなたのサイトのアドレスがhttp://example.com だった場合、このアドレスへアクセスすると自動的に http://www.example.com へリダイレクトされます。やったぜ！
+この.htaccessを使えば、例えば　あなたのサイトのアドレスがhttps://example.com だった場合、このアドレスへアクセスすると自動的に https://www.example.com へリダイレクトされます。やったぜ！
 
 ## 解説
 ### RewriteEngine On
@@ -29,7 +29,7 @@ RewriteCondの条件に当てはまった場合は、RewriteRuleを実行しま�
 ### `^(.*)$`
 これも正規表現です。^は「行頭」。.は「任意の一文字」。`*`は「直前の文字の0回以上の繰り返し」。$は「行末」。また、()で囲むことで、後で$1の様にして、その内容を取得できます。つまり、これは「始まりから終わりまで、どんな文字でもいい」すなわち「全ての文字」を意味します。例えばアクセスされたページが `http://example.com/abc.html` であった場合は `abc.html` の文字のことです。`http://example.com/dir1/dir2/go.php` であった場合は、 `dir1/dir2/go.php` の文字のことです。
 
-### `http://www.%{HTTP_HOST}/$1`
+### `https://www.%{HTTP_HOST}/$1`
 RewriteCondの条件に当てはまった場合の書き換え後のアドレスです。`www.`がついていなかったホスト名に`www.`をつけています。$1には、 `^(.*)$` で取得した文字列、すなわち `abc.html` や `dir1/dir2/go.php` などが入ります。また、もし最初からホスト名に`www.`がついていた場合（`www.`がついているアドレスにアクセスされた場合）は、そもそものRewriteCondの条件に当てはまらないので、このRewriteRuleは実行されません。
 
 ### `[R=301,L]`
