@@ -11,3 +11,4 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} !^www\.
 RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
 ```
+この.htaccessを使えば、例えば　あなたのサイトのアドレスがhttp://example.com だった場合、このアドレスへアクセスすると自動的に http://www.example.com へリダイレクトされます。やったぜ！
