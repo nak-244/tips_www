@@ -13,6 +13,14 @@ RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
 ```
 この.htaccessを使えば、例えば　あなたのサイトのアドレスがhttps://example.com だった場合、このアドレスへアクセスすると自動的に https://www.example.com へリダイレクトされます。やったぜ！
 
+もし、wwwなしに統一する場合はこっち。
+
+```
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+```
+
 ## 解説
 ### RewriteEngine On
 Rewrite機能を有効にします。Rewrite機能とは、アクセスのあったURLを、正規表現で書き換えてから処理する機能です。
