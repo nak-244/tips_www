@@ -42,3 +42,26 @@ RewriteCondの条件に当てはまった場合の書き換え後のアドレス
 
 ### `[R=301,L]`
 R=301とは、`www.`がついていないアドレスへ遷移された場合は`www.`つきのアドレスへ「301リダイレクト」することを意味します。Lとは、「RewriteCond」の条件にあてはまった書き換えルールはこの「RewriteRule」で終わり、ということを意味します（.htaccessでは、その気になれば、RewriteRuleを複数書くことが出来ます）。
+
+
+# .htaccessでindex.htmlやindex.phpをリダイレクトさせるクールな書き方
+
+```
+# index.html を省略
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s(.*/)?index\.html[\s?] [NC]
+RewriteRule ^(.*)index\.html$ /$1 [R=301,L]
+
+# index.php を省略
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s(.*/)?index\.php[\s?] [NC]
+RewriteRule ^(.*)index\.php$ /$1 [R=301,L]
+```
+
+このhtaccessを使えば、URLがどのサイトでも応用ができるので、とってもクールです。
+
+## 解説
+### `RewriteCond %{THE_REQUEST} ...`
+ユーザーが直接ブラウザに「index.html」などを入力したときだけリダイレクト。内部処理には影響しません。
+
+### `[R=301,L]`
+301リダイレクト（恒久的なリダイレクト）を指定。Lはこのルールで処理を終える指示。
+
